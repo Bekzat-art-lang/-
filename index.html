@@ -190,10 +190,12 @@
         body: JSON.stringify({ message: text })
       });
 
-      const data = await res.json();
-      addMessage(data.reply || "Жауап табылмады", "bot");
+      // Make webhook көбіне JSON емес text қайтарады
+      const data = await res.text();
+      addMessage(data || "Жауап келмеді", "bot");
 
     } catch (e) {
+      console.error(e);
       addMessage("Сервермен байланыс жоқ", "bot");
     }
   }
